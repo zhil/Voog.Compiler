@@ -18,12 +18,7 @@ const asc = require("assemblyscript/cli/asc");
 /*import * as xx from "near-sdk-bindgen/dist";*/
 
 router.get('/', async (req: express.Request, res: express.Response) => {
-	try {
-		var data = await compileContractTest();
-	} catch (error) {
-		res.json(error);
-		return;
-	}
+	var data = await compileContractTest();
 	res.json(JSON.stringify(data));
 });
 

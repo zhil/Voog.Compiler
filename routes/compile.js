@@ -27,13 +27,7 @@ const asc = require("assemblyscript/cli/asc");
 //import { value_return } from "near-sdk-core/assembly/env/env";
 /*import * as xx from "near-sdk-bindgen/dist";*/
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    try {
-        var data = yield compileContractTest();
-    }
-    catch (error) {
-        res.json(error);
-        return;
-    }
+    var data = yield compileContractTest();
     res.json(JSON.stringify(data));
 }));
 exports.default = router;

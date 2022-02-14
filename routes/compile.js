@@ -181,14 +181,14 @@ function compileContract(contractContent) {
     return __awaiter(this, void 0, void 0, function* () {
         yield Promise
             .all([
-            precludeWebDir("assemblyscript-temporal", "https://localhost:5001/cdn/assemblyscript-temporal-2.2.3/", "https://localhost:5001/cdn/assemblyscript-temporal-2.2.3/", "https://localhost:5001/cdn/assemblyscript-temporal-2.2.3/"),
-            precludeWebDir("assemblyscript-regex", "https://localhost:5001/cdn/assemblyscript-regex-1.6.4/", "https://localhost:5001/cdn/assemblyscript-regex-1.6.4/", "https://localhost:5001/cdn/assemblyscript-regex-1.6.4/"),
-            precludeWebDir("near-sdk-as", "https://localhost:5001/cdn/near-sdk-as-3.2.3/", "https://localhost:5001/cdn/near-sdk-as-3.2.3/", "https://localhost:5001/cdn/near-sdk-as-3.2.3/"),
-            precludeWebDir("near-mock-vm", "https://localhost:5001/cdn/near-mock-vm-3.2.2/", "https://localhost:5001/cdn/near-mock-vm-3.2.2/", "https://localhost:5001/cdn/near-mock-vm-3.2.2/"),
-            precludeWebDir("as-bignum", "https://localhost:5001/cdn/as-bignum-0.2.18/", "https://localhost:5001/cdn/as-bignum-0.2.18/", "https://localhost:5001/cdn/as-bignum-0.2.18/"),
-            precludeWebDir("near-sdk-core", "https://localhost:5001/cdn/near-sdk-core-3.2.1/", "https://localhost:5001/cdn/near-sdk-core-3.2.1/", "https://localhost:5001/cdn/near-sdk-core-3.2.1/"),
-            precludeWebDir("assemblyscript-json", "https://localhost:5001/cdn/assemblyscript-json-1.2.0/", "https://localhost:5001/cdn/assemblyscript-json-1.2.0/", "https://localhost:5001/cdn/assemblyscript-json-1.2.0/"),
-            precludeWebDir("near-sdk-bindgen", "https://localhost:5001/cdn/near-sdk-bindgen-3.2.1/", "https://localhost:5001/cdn/near-sdk-bindgen-3.2.1/", "https://localhost:5001/cdn/near-sdk-bindgen-3.2.1/")
+            precludeWebDir("assemblyscript-temporal", "https://voogcompiler.azurewebsites.net/cdn/assemblyscript-temporal-2.2.3/", "https://voogcompiler.azurewebsites.net/cdn/assemblyscript-temporal-2.2.3/", "https://voogcompiler.azurewebsites.net/cdn/assemblyscript-temporal-2.2.3/"),
+            precludeWebDir("assemblyscript-regex", "https://voogcompiler.azurewebsites.net/cdn/assemblyscript-regex-1.6.4/", "https://voogcompiler.azurewebsites.net/cdn/assemblyscript-regex-1.6.4/", "https://voogcompiler.azurewebsites.net/cdn/assemblyscript-regex-1.6.4/"),
+            precludeWebDir("near-sdk-as", "https://voogcompiler.azurewebsites.net/cdn/near-sdk-as-3.2.3/", "https://voogcompiler.azurewebsites.net/cdn/near-sdk-as-3.2.3/", "https://voogcompiler.azurewebsites.net/cdn/near-sdk-as-3.2.3/"),
+            precludeWebDir("near-mock-vm", "https://voogcompiler.azurewebsites.net/cdn/near-mock-vm-3.2.2/", "https://voogcompiler.azurewebsites.net/cdn/near-mock-vm-3.2.2/", "https://voogcompiler.azurewebsites.net/cdn/near-mock-vm-3.2.2/"),
+            precludeWebDir("as-bignum", "https://voogcompiler.azurewebsites.net/cdn/as-bignum-0.2.18/", "https://voogcompiler.azurewebsites.net/cdn/as-bignum-0.2.18/", "https://voogcompiler.azurewebsites.net/cdn/as-bignum-0.2.18/"),
+            precludeWebDir("near-sdk-core", "https://voogcompiler.azurewebsites.net/cdn/near-sdk-core-3.2.1/", "https://voogcompiler.azurewebsites.net/cdn/near-sdk-core-3.2.1/", "https://voogcompiler.azurewebsites.net/cdn/near-sdk-core-3.2.1/"),
+            precludeWebDir("assemblyscript-json", "https://voogcompiler.azurewebsites.net/cdn/assemblyscript-json-1.2.0/", "https://voogcompiler.azurewebsites.net/cdn/assemblyscript-json-1.2.0/", "https://voogcompiler.azurewebsites.net/cdn/assemblyscript-json-1.2.0/"),
+            precludeWebDir("near-sdk-bindgen", "https://voogcompiler.azurewebsites.net/cdn/near-sdk-bindgen-3.2.1/", "https://voogcompiler.azurewebsites.net/cdn/near-sdk-bindgen-3.2.1/", "https://voogcompiler.azurewebsites.net/cdn/near-sdk-bindgen-3.2.1/")
         ]);
         return yield new Promise((resolve, reject) => {
             asc.ready.then(() => {

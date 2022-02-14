@@ -7,7 +7,7 @@ const agent = new https.Agent({
 	rejectUnauthorized: false
 })
 const router = express.Router();
-const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
+//const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 
 const asc = require("assemblyscript/cli/asc");
 //import includeBytesTransform from "visitor-as/dist/examples/includeBytesTransform.js";
@@ -24,6 +24,25 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 
 export default router;
 
+async function fetch(url) : Promise<string> {
+	return new Promise((resolve, reject) => {
+		const req = https.get(
+			url,
+			res => {
+				const chunks = [];
+				res.on('data', data => chunks.push(data))
+				res.on('end', () => {
+					let resBody = Buffer.concat(chunks);
+					resolve(resBody.toString())
+			})
+		})
+		req.on('error', reject);
+		//if (body) {
+		//	req.write(body);
+		//}
+		req.end();
+	})
+}
 
 var fileSystem = {};
 //var localTransforms = [new includeBytesTransform(), new bindgen(), new exportAs()];
@@ -304,8 +323,7 @@ async function processJsDelivrDirectory(name: string, baseUrl: string, directory
 
 	await Promise.all(directory.files.map(async (node) => {
 		if (node.type === "file") {
-			var file = await fetch(baseUrl + "/" + node.name);
-			var fileText = await file.text();
+			var fileText = await fetch(baseUrl + "/" + node.name);
 			fileSystem[name + "/" + node.name] = fileText;
 		}
 		if (node.type === "directory") {
@@ -315,8 +333,7 @@ async function processJsDelivrDirectory(name: string, baseUrl: string, directory
 }
 
 async function precludeJsDelivr(name: string, url: string, baseUrl: string) {
-	var root = await fetch(url);
-	var rootText = await root.text();
+	var rootText = await fetch(url);
 	var rootJson = JSON.parse(rootText);
 	await processJsDelivrDirectory(name, baseUrl, rootJson);
 }
@@ -325,8 +342,7 @@ async function precludeWebDir(name: string, url: string, rootUrl: string, baseUr
 	var relativeUrl = name + "/" + url.replace(rootUrl, "");
 	var nameKey = relativeUrl.substring(0, relativeUrl.length - 1) + ".ts";
 	fileSystem[nameKey] = "";
-	var root = await fetch(url, { agent });
-	var rootText = await root.text();
+	var rootText = await fetch(url);
 
 	var linkRegex = /class="name"><a href="([^"]*)">/ig;
 
@@ -339,8 +355,7 @@ async function precludeWebDir(name: string, url: string, rootUrl: string, baseUr
 			await precludeWebDir(name, rootUrl + shortFileName, rootUrl, baseUrl);
 		} else {
 			if (!shortFileName.endsWith(".wat") && !shortFileName.endsWith(".dat")) {
-				var file = await fetch(rootUrl + shortFileName, { agent });
-				var fileText = await file.text();
+				var fileText = await fetch(rootUrl + shortFileName);
 				fileSystem[name + "/" + shortFileName] = fileText;
 			}
 		}

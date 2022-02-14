@@ -18,7 +18,7 @@ const agent = new https.Agent({
     rejectUnauthorized: false
 });
 const router = express.Router();
-const fetch = (...args) => Promise.resolve().then(() => require('node-fetch')).then(({ default: fetch }) => fetch(...args));
+//const fetch = (...args) => import('node-fetch').then(({ default: fetch }) => fetch(...args));
 const asc = require("assemblyscript/cli/asc");
 //import includeBytesTransform from "visitor-as/dist/examples/includeBytesTransform.js";
 //import bindgen from "near-bindgen-as";
@@ -31,6 +31,25 @@ router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.json(JSON.stringify(data));
 }));
 exports.default = router;
+function fetch(url) {
+    return __awaiter(this, void 0, void 0, function* () {
+        return new Promise((resolve, reject) => {
+            const req = https.get(url, res => {
+                const chunks = [];
+                res.on('data', data => chunks.push(data));
+                res.on('end', () => {
+                    let resBody = Buffer.concat(chunks);
+                    resolve(resBody.toString());
+                });
+            });
+            req.on('error', reject);
+            //if (body) {
+            //	req.write(body);
+            //}
+            req.end();
+        });
+    });
+}
 var fileSystem = {};
 //var localTransforms = [new includeBytesTransform(), new bindgen(), new exportAs()];
 //var localTransforms = [];
@@ -284,8 +303,7 @@ function processJsDelivrDirectory(name, baseUrl, directory) {
         fileSystem[name + ".ts"] = "";
         yield Promise.all(directory.files.map((node) => __awaiter(this, void 0, void 0, function* () {
             if (node.type === "file") {
-                var file = yield fetch(baseUrl + "/" + node.name);
-                var fileText = yield file.text();
+                var fileText = yield fetch(baseUrl + "/" + node.name);
                 fileSystem[name + "/" + node.name] = fileText;
             }
             if (node.type === "directory") {
@@ -296,8 +314,7 @@ function processJsDelivrDirectory(name, baseUrl, directory) {
 }
 function precludeJsDelivr(name, url, baseUrl) {
     return __awaiter(this, void 0, void 0, function* () {
-        var root = yield fetch(url);
-        var rootText = yield root.text();
+        var rootText = yield fetch(url);
         var rootJson = JSON.parse(rootText);
         yield processJsDelivrDirectory(name, baseUrl, rootJson);
     });
@@ -307,8 +324,7 @@ function precludeWebDir(name, url, rootUrl, baseUrl) {
         var relativeUrl = name + "/" + url.replace(rootUrl, "");
         var nameKey = relativeUrl.substring(0, relativeUrl.length - 1) + ".ts";
         fileSystem[nameKey] = "";
-        var root = yield fetch(url, { agent });
-        var rootText = yield root.text();
+        var rootText = yield fetch(url);
         var linkRegex = /class="name"><a href="([^"]*)">/ig;
         var links = [...rootText.matchAll(linkRegex)];
         yield Promise.all(links.map((node) => __awaiter(this, void 0, void 0, function* () {
@@ -319,8 +335,7 @@ function precludeWebDir(name, url, rootUrl, baseUrl) {
             }
             else {
                 if (!shortFileName.endsWith(".wat") && !shortFileName.endsWith(".dat")) {
-                    var file = yield fetch(rootUrl + shortFileName, { agent });
-                    var fileText = yield file.text();
+                    var fileText = yield fetch(rootUrl + shortFileName);
                     fileSystem[name + "/" + shortFileName] = fileText;
                 }
             }

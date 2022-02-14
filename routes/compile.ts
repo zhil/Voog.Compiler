@@ -18,13 +18,13 @@ const asc = require("assemblyscript/cli/asc");
 /*import * as xx from "near-sdk-bindgen/dist";*/
 
 router.get('/test', async (req: express.Request, res: express.Response) => {
-	var result = {};
+	var result = { data : '', error : '' };
 	try {
-		result["data"] = await compileContractTest();
+		result.data = JSON.stringify(await compileContractTest());
 	} catch (err) {
-		result["error"] = err.message;
+		result.error = err.message;
 	}
-	res.send(result);
+	res.json(result);
 });
 
 router.get('/', async (req: express.Request, res: express.Response) => {
@@ -32,13 +32,13 @@ router.get('/', async (req: express.Request, res: express.Response) => {
 });
 
 router.post('/', async (req: express.Request, res: express.Response) => {
-	var result = { };
+	var result = { data: '', error: '' };
 	try {
-		result["data"] = await compileContract(req.body.source);
+		result.data = JSON.stringify(await compileContract(req.body.source));
 	} catch (err) {
-		result["error"] = err.message;
+		result.error = err.message;
 	}
-	res.send(result);
+	res.json(result);
 });
 
 export default router;

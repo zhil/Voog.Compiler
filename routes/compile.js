@@ -27,27 +27,27 @@ const asc = require("assemblyscript/cli/asc");
 //import { value_return } from "near-sdk-core/assembly/env/env";
 /*import * as xx from "near-sdk-bindgen/dist";*/
 router.get('/test', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var result = {};
+    var result = { data: '', error: '' };
     try {
-        result["data"] = yield compileContractTest();
+        result.data = JSON.stringify(yield compileContractTest());
     }
     catch (err) {
-        result["error"] = err.message;
+        result.error = err.message;
     }
-    res.send(result);
+    res.json(result);
 }));
 router.get('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
     res.send("Use post instead!");
 }));
 router.post('/', (req, res) => __awaiter(void 0, void 0, void 0, function* () {
-    var result = {};
+    var result = { data: '', error: '' };
     try {
-        result["data"] = yield compileContract(req.body.source);
+        result.data = JSON.stringify(yield compileContract(req.body.source));
     }
     catch (err) {
-        result["error"] = err.message;
+        result.error = err.message;
     }
-    res.send(result);
+    res.json(result);
 }));
 exports.default = router;
 function fetch(url) {

@@ -5,6 +5,7 @@ import * as path from 'path';
 import routes from './routes/index';
 import users from './routes/user';
 import compile from './routes/compile';
+var bodyParser = require('body-parser');
 
 const debug = require('debug')('my express app');
 const app = express();
@@ -14,6 +15,11 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'pug');
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.json('application/json'));
+
 
 app.use('/', routes);
 app.use('/users', users);
